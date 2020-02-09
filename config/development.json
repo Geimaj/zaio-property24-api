@@ -1,0 +1,7 @@
+{
+	"host": "localhost",
+	"url": "http://localhost:3030",
+	"env": "development",
+	"dbURL": "mongodb://localhost:27017/property24",
+	"sessionSecret": "qwertyuiop123456789"
+}
