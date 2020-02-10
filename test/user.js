@@ -1,42 +1,100 @@
-const assert = require("assert");
+const request = require("supertest");
+const app = require("../index");
+const { connect, disconnect } = require("./connection");
+const expect = require("chai").expect;
 const User = require("../models/User");
 
-describe("User", () => {
-  it("adds user", done => {
-    const user = new User({
-      username: "tester"
-    });
-    user.save().then(() => {
-      assert(user.isNew === false);
+//drop all users
+before(done => {
+  connect()
+    .then(res => {
+      return User.deleteMany({});
+    })
+    .then(res => {
       done();
-    });
-  });
+    })
+    .catch(err => done(err));
+});
 
-  it("finds user", done => {
-    User.findOne({ username: "tester" }).then(user => {
-      assert(user.username === "tester");
-      done();
-    });
-  });
-
-  it("sets password", done => {
-    User.findOne({ username: "tester" }).then(async user => {
-      user.setPassword("test").then(updatedUser => {
-        assert(user.hash);
-        assert(user.salt);
+describe("user", () => {
+  it("creates user", done => {
+    request(app)
+      .post("/signup")
+      .send({
+        username: "test",
+        password: "test"
+      })
+      .expect(200)
+      .then(res => {
         done();
+      })
+      .catch(err => {
+        done(err);
       });
-    });
   });
 
-  it("validates password", done => {
-    User.findOne({ username: "tester" }).then(user => {
-      assert(user.validPassword("test"));
-      done();
-    });
+  it("logs in", done => {
+    request(app)
+      .post("/login")
+      .send({
+        username: "test",
+        password: "test"
+      })
+      .expect(302)
+      .expect("location", "/")
+      .then(res => {
+        done();
+      })
+      .catch(err => {
+        console.log(err);
+        done(err);
+      });
   });
 
-  //   it("uses unique usernames only", done => {
-  //     done();
-  //   });
+  it("validates creds", done => {
+    request(app)
+      .post("/login")
+      .send({
+        username: "test",
+        password: "notpassword"
+      })
+      .expect(302)
+      .expect("location", "/login?fail=true")
+      .then(res => {
+        done();
+      })
+      .catch(err => {
+        console.log(err);
+        done(err);
+      });
+  });
+
+  it("only allows unique usernames", done => {
+    request(app)
+      .post("/signup")
+      .send({
+        username: "test",
+        password: "test"
+      })
+      .expect(422)
+      .catch(err => done(err))
+      .finally(done());
+  });
+
+  it("should save cookies", done => {
+    request(app)
+      .post("/login")
+      .send({
+        username: "test",
+        password: "test"
+      })
+      .then(res => {
+        const cookie = res.header["set-cookie"][0];
+        expect(cookie.toString(), /^connect.sid/);
+        done();
+      })
+      .catch(err => {
+        done(err);
+      });
+  });
 });
