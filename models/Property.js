@@ -12,4 +12,4 @@ const propertySchema = new Schema({
 
 const Property = mongoose.model("Property", propertySchema);
 
-module.exports = Property;
+module.exports = mongoose.models.Property || Property;

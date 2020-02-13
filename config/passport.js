@@ -1,6 +1,6 @@
-const User = require("../models/User");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const User = require("../models/User");
 
 passport.use(
 	new LocalStrategy(
@@ -9,6 +9,7 @@ passport.use(
 			passwordField: "password"
 		},
 		async (username, password, done) => {
+			console.log("AUTHORIZING USER...");
 			User.findOne({ username: username })
 				.then(user => {
 					if (!user) {
@@ -26,6 +27,7 @@ passport.use(
 					return done(null, user);
 				})
 				.catch(err => {
+					console.log("caught err", err.message);
 					done(err);
 				});
 		}

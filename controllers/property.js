@@ -4,6 +4,7 @@ module.exports = app => {
 	//User CRUD
 	app.route("/property")
 		.get((req, res) => {
+			console.log("GETTING PROPERTIES");
 			Property.find({}).then(properties => {
 				res.send(properties);
 			});
