@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": " env $(cat .env) nodemon index.js ",
 		"test": "mocha -w",
-		"start": "node index.js"
+		"start": "npm install --only=dev && node index.js"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.2",
