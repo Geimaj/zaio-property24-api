@@ -1,4 +1,4 @@
-const { get, post } = require("./api");
+const { get } = require("./api");
 
 module.exports.Property = class Property {
   constructor(street, number, beds, baths, price) {

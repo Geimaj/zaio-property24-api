@@ -51,6 +51,11 @@ module.exports = app => {
       })
     )
     .get((req, res) => {
-      req.query.fail ? res.send("Invalid creds") : res.send("login page");
+      if (req.query.fail) {
+        res.status(401);
+        res.send("Invalid creds");
+      } else {
+        res.send("login page");
+      }
     });
 };

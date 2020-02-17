@@ -2,8 +2,16 @@ const BASE_URL =
   location.hostname === "localhost" ? `http://localhost:3030` : "produrl";
 module.exports.BASE_URL = BASE_URL;
 
-module.exports.get = function get() {
-  throw new Error();
+module.exports.get = function get(endpoint) {
+  const url = `${BASE_URL}${endpoint}`;
+
+  return fetch(url, {
+    method: "GET",
+    // mode: "no-cors",
+    credentials: "include"
+  }).then(res => {
+    return res.json();
+  });
 };
 
 module.exports.post = function post(endpoint, jsonData) {
@@ -15,8 +23,8 @@ module.exports.post = function post(endpoint, jsonData) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(jsonData),
-    credentials: "include",
-    mode: "no-cors"
+    credentials: "include"
+    // mode: "no-cors"
     // credentials: "same-origin"
   })
     .then(res => res.json())

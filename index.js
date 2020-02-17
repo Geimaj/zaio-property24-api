@@ -15,8 +15,6 @@ const app = express();
 const config = require("./config/config"),
   port = process.env.PORT || 3030,
   { env, dbURL, url } = config;
-// env = config.env,
-// dbURL = config.dbURL;
 
 app.set("port", port);
 app.set("env", env);
@@ -41,12 +39,18 @@ app.use((req, res, next) => {
   next();
 });
 
+//set Access-Control-Allow-Credentials header
 app.use((req, res, next) => {
-  cors({
-    origin: req.originalUrl
-  });
+  res.set("Access-Control-Allow-Credentials", "true");
   next();
 });
+app.use(
+  cors({
+    origin: true
+  })
+);
+app.options("*", cors());
+
 app.use(bodyParser.json());
 
 //passport
@@ -58,15 +62,15 @@ app.use(passport.session());
 userController(app);
 
 //make sure all other requests are authenticated
-// app.use((req, res, next) => {
-// 	if (!req.user) {
-// 		res.status(401);
-// 		res.send({ error: "unauthorized request" });
-// 		next("that was an unauthorized request");
-// 	} else {
-// 		next();
-// 	}
-// });
+app.use((req, res, next) => {
+  if (!req.user) {
+    res.status(401);
+    res.send({ error: "unauthorized request" });
+    next("that was an unauthorized request");
+  } else {
+    next();
+  }
+});
 
 //all other controllers
 propertyController(app);
