@@ -13,8 +13,8 @@ const propertyController = require("./controllers/property");
 const app = express();
 
 const config = require("./config/config"),
-	port = process.env.PORT || 3030,
-	{ env, dbURL, url } = config;
+  port = process.env.PORT || 3030,
+  { env, dbURL, url } = config;
 // env = config.env,
 // dbURL = config.dbURL;
 
@@ -23,26 +23,29 @@ app.set("env", env);
 
 //connect to database
 const connectionString = dbURL;
+console.log(`connectionString ${connectionString}`);
 mongoose
-	.connect(connectionString, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useNewUrlParser: true
-	})
-	.catch(err => {
-		console.log("error");
-		console.log(err);
-	});
+  .connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  })
+  .catch(err => {
+    console.log("error");
+    console.log(err);
+  });
 
 //middleware
 app.use((req, res, next) => {
-	// console.log(`${req.method} ${req.path}`);
-	next();
+  console.log(`${req.method} ${req.path}`);
+  next();
 });
+
 app.use((req, res, next) => {
-	cors({
-		origin: req.originalUrl
-	});
+  cors({
+    origin: req.originalUrl
+  });
+  next();
 });
 app.use(bodyParser.json());
 
@@ -69,17 +72,15 @@ userController(app);
 propertyController(app);
 
 app.get("/", (req, res) => {
-	const user = req.user;
-	user
-		? res.send({ message: "welcome" })
-		: res.send({ error: "login first" });
+  const user = req.user;
+  user ? res.send({ message: "welcome" }) : res.send({ error: "login first" });
 });
 
 //error handling
 app.use((err, req, res, next) => {
-	console.log(err);
-	res.status(422).send({ error: err.message });
-	next(err.message);
+  console.log(err);
+  res.status(422).send({ error: err.message });
+  next(err.message);
 });
 
 app.listen(port);

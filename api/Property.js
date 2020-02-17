@@ -1,22 +1,15 @@
-const { post } = require("./api");
+const { get, post } = require("./api");
 
 module.exports.Property = class Property {
-	constructor(username, password) {
-		this.username = username;
-		this.password = password;
-	}
+  constructor(street, number, beds, baths, price) {
+    this.street = street;
+    this.number = number;
+    this.beds = beds;
+    this.baths = baths;
+    this.price = price;
+  }
 
-	signup() {
-		return post("/signup", {
-			username: this.username,
-			password: this.password
-		});
-	}
-
-	login() {
-		return post("/login", {
-			username: this.username,
-			password: this.password
-		});
-	}
+  static getAll() {
+    return get("/property", {});
+  }
 };
