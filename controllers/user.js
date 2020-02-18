@@ -1,12 +1,10 @@
 const passport = require("../config/passport");
-const User = require("../models/User");
+const { User, getSafeUserData } = require("../models/User");
 
 module.exports = app => {
 	//User CRUD
 	app.route("/signup").post(async (req, res, next) => {
-		const { username, password } = req.body;
-		console.log(req.body);
-		console.log("signup");
+		const { username, password, email, fullname } = req.body;
 		try {
 			//validate
 			if (!username) {
@@ -23,12 +21,19 @@ module.exports = app => {
 			}
 
 			new User({
-				username: username
+				username: username,
+				email: email,
+				fullname: fullname
 			})
 				.save()
 				.then(user => user.setPassword(password))
 				.then(user =>
-					res.send({ _id: user._id, username: user.username })
+					res.send({
+						_id: user._id,
+						username: user.username,
+						email: user.email,
+						fullname: user.fullname
+					})
 				)
 				.catch(next);
 		} catch (err) {
@@ -59,4 +64,34 @@ module.exports = app => {
 				res.send({ message: "login page" });
 			}
 		});
+
+	app.route("/user").get((req, res) => {
+		User.find({})
+			.then(users => {
+				users = users.map(user => {
+					return getSafeUserData(user);
+				});
+
+				res.send(users);
+			})
+			.catch(err => {
+				res.status(500);
+				res.send({
+					error: err.message
+				});
+			});
+	});
+
+	app.route("/user/:id").get((req, res) => {
+		User.findById(req.params.id)
+			.then(user => {
+				res.send(getSafeUserData(user) || {});
+			})
+			.catch(err => {
+				res.status(500);
+				res.send({
+					error: err.message
+				});
+			});
+	});
 };

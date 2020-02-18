@@ -5,7 +5,9 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
 	username: { type: String, required: true, unique: true },
 	hash: String,
-	salt: String
+	salt: String,
+	email: String,
+	fullname: String
 });
 
 userSchema.methods.setPassword = function(password) {
@@ -26,4 +28,13 @@ userSchema.methods.validPassword = function(password) {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = mongoose.models.User || User;
+module.exports.User = mongoose.models.User || User;
+module.exports.getSafeUserData = function(user) {
+	const safeCopy = {
+		id: user.id,
+		username: user.username,
+		fullname: user.fullname,
+		email: user.email
+	};
+	return safeCopy;
+};
