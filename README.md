@@ -21,9 +21,11 @@ import { User } from "zaio-property24-api/api/User";
 
 new User(
     "username",
-    "password"
+    "password",
+    "fullname",
+    "email"
     )
-    .save()
+    .signup()
     .then(user => {
         console.log(user)
     })
