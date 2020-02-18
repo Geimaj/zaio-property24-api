@@ -13,6 +13,12 @@ module.exports.Property = class Property {
 		return get("/property", {});
 	}
 
+	static getAllForUser(userId) {
+		return get(`/property?postedBy=${userId}`, {
+			postedBy: userId
+		});
+	}
+
 	static delete(id) {
 		return remove(`/property/${id}`);
 	}

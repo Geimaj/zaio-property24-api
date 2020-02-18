@@ -5,11 +5,19 @@ const propertyRouter = require("express").Router();
 propertyRouter
 	.route("/") // (/property/)
 	.get((req, res) => {
-		console.log("GETTING PROPERTIES");
-		Property.find({}).then(properties => {
-			res.send(properties);
-			return;
-		});
+		let filter = {
+			...req.query
+		};
+		Property.find(filter)
+			.then(properties => {
+				res.send(properties);
+				return;
+			})
+			.catch(err => {
+				res.status(500);
+				res.send(err);
+				res.send([]);
+			});
 	})
 	.post((req, res) => {
 		const user = req.user;
