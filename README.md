@@ -17,8 +17,7 @@ To use:
 ```
 import { User } from "zaio-property24-api/api/User";
 
-//creates a new user
-
+//signup
 new User(
     "username",
     "password",
@@ -32,6 +31,12 @@ new User(
     .catch(err => {
         console.log(err)
     })
+
+//login
+new User("username","password")
+    .login()
+    .then(...)
+    .catch(...)
 
 ```
 
@@ -70,8 +75,8 @@ new Property(
 
 //update property
 new Property(street, number, beds, baths, price)
-.update(id)
-.then(...)
-.catch(...)
+    .update(id)
+    .then(...)
+    .catch(...)
 
 ```
