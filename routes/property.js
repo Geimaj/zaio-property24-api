@@ -53,7 +53,17 @@ propertyRouter
 	});
 
 propertyRouter
-	.route("/:id") // (/property/:id)
+	.route("/:id") // /property/:id
+	.get((req, res) => {
+		Property.findById(req.params.id)
+			.then(property => {
+				res.send(property);
+			})
+			.catch(err => {
+				res.status(500);
+				res.send({ error: err.message });
+			});
+	})
 	.delete(async (req, res) => {
 		const userID = req.user.id;
 		const propertyID = req.params.id;

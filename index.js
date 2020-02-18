@@ -6,15 +6,17 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
 
-//controller imports
-const userController = require("./controllers/user");
-const propertyRouter = require("./controllers/property");
+//import routers
+const loginRouter = require("./routes/login");
+const signupRouter = require("./routes/signup");
+const userRouter = require("./routes/user");
+const propertyRouter = require("./routes/property");
 
 const app = express();
 
 const config = require("./config/config"),
 	port = process.env.PORT || 3030,
-	{ env, dbURL, url } = config;
+	{ env, dbURL } = config;
 
 app.set("port", port);
 app.set("env", env);
@@ -33,13 +35,13 @@ mongoose
 		console.log(err);
 	});
 
+//cors
 //set Access-Control-Allow-Credentials header
 app.use((req, res, next) => {
 	console.log(`${req.method} ${req.path}`);
 	res.set("Access-Control-Allow-Credentials", "true");
 	next();
 });
-
 app.use(
 	cors({
 		origin: true
@@ -54,8 +56,9 @@ app.use(session({ secret: "dev" }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//login controller
-userController(app);
+//unuathenticated routes
+app.use("/signup", signupRouter);
+app.use("/login", loginRouter);
 
 //make sure all other requests are authenticated
 app.use((req, res, next) => {
@@ -67,12 +70,13 @@ app.use((req, res, next) => {
 		next();
 	}
 });
+// every route below this line will fail without auth
 
-//all other routes
+//authenticated routes
+app.use("/user", userRouter);
 app.use("/property", propertyRouter);
 
 app.get("/", (req, res) => {
-	const user = req.user;
 	if (req.user) {
 		res.send({ message: "welcome" });
 	} else {
