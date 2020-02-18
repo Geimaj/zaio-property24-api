@@ -3,7 +3,7 @@ const Property = require("../models/Property");
 const propertyRouter = require("express").Router();
 
 propertyRouter
-	.route("/") // (/property/)
+	.route("/") // /property/
 	.get((req, res) => {
 		let filter = {
 			...req.query
@@ -21,13 +21,8 @@ propertyRouter
 	})
 	.post((req, res) => {
 		const user = req.user;
-		const { street, number, beds, baths, price } = req.body;
 		new Property({
-			street: street,
-			number: number,
-			beds: beds,
-			baths: baths,
-			price: price,
+			...req.body,
 			postedBy: user.id
 		})
 			.save()
@@ -52,7 +47,8 @@ propertyRouter
 			const updatedProperty = await Property.findById(propertyID);
 			res.send(updatedProperty);
 		} else {
-			res.send("thats not yours");
+			res.status(403);
+			res.send({ error: "thats not yours" });
 		}
 	});
 
@@ -68,6 +64,7 @@ propertyRouter
 			await property.delete();
 			res.send(property);
 		} else {
+			res.status(403);
 			res.send({
 				error: "You do not own that property"
 			});

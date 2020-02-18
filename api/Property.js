@@ -7,7 +7,9 @@ module.exports.Property = class Property {
 		beds = 0,
 		baths = 0,
 		price = 0,
-		images = []
+		images = [],
+		postCode = "0000",
+		name = `${beds} beds on ${street}`
 	) {
 		this.street = street;
 		this.number = number;
@@ -15,16 +17,22 @@ module.exports.Property = class Property {
 		this.baths = baths;
 		this.price = price;
 		this.images = images;
+		this.postCode = postCode;
+		this.name = name;
 	}
 
 	static getAll() {
-		return get("/property", {});
+		return get("/property");
 	}
 
 	static getAllForUser(userId) {
 		return get(`/property?postedBy=${userId}`, {
 			postedBy: userId
 		});
+	}
+
+	static getAllByName(propertyName) {
+		return get(`/property?name=${propertyName}`);
 	}
 
 	static delete(id) {

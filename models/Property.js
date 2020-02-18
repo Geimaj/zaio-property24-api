@@ -7,7 +7,10 @@ const propertySchema = new Schema({
 	beds: Number,
 	baths: Number,
 	price: Number,
-	postedBy: Schema.Types.ObjectId
+	postedBy: Schema.Types.ObjectId,
+	images: Array,
+	postCode: String,
+	name: String
 });
 
 const Property = mongoose.model("Property", propertySchema);

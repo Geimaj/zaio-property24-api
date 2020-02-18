@@ -59,7 +59,10 @@ new Property(
         5, //number
         2, //beds
         2, //baths
-        100000 //price
+        100000, //price
+        ["https://image1.com", "https://image2.com"], //images
+        7500 //postCode,
+        "Country cottage" //name
     )
     .save()
     .then(...)
