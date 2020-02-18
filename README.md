@@ -35,7 +35,7 @@ new User(
 
 ```
 
-## User
+## Property
 
 ```
 import { Property } from "zaio-property24-api/api/Property";
