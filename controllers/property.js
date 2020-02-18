@@ -46,10 +46,13 @@ propertyRouter
 		} else {
 			res.send("thats not yours");
 		}
-	})
+	});
+
+propertyRouter
+	.route("/:id") // (/property/:id)
 	.delete(async (req, res) => {
 		const userID = req.user.id;
-		const propertyID = req.body.id;
+		const propertyID = req.params.id;
 
 		//make sure user owns property
 		const property = await Property.findById(propertyID);
