@@ -5,6 +5,7 @@ To install:
 -   Clone this repository
 -   npm install "/path/to/this/repo" inside your client project
 -   add this line to a .env file in your project root:
+-   be sure to include .env in your .gitignore file
 
 ```
 REACT_APP_BASE_URL="link.to.heroku.api"
