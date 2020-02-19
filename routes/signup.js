@@ -6,16 +6,16 @@ signupRouter.route("/").post(async (req, res, next) => {
   try {
     //validate
     if (!username) {
-      throw new Error("{error: 'usernamename is required'}");
+      throw new Error("usernamename is required");
     }
     if (!password) {
-      throw new Error("{error: 'password is required'}");
+      throw new Error("password is required");
     }
 
     const existingUsers = await User.find({ username: username });
     //ensure username is available
     if ((await existingUsers).length > 0) {
-      throw new Error("{error: 'username is taken'}");
+      throw new Error("username is taken");
     }
 
     new User({
