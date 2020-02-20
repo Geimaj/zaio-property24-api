@@ -74,4 +74,10 @@ new Property(street, number, beds, baths, price)
     .then(...)
     .catch(...)
 
+//get app properties posted by a particular user
+Property.getAllForUser(user.id).then(....)
+
+//search properties by name
+Property.getAllByName("beach villa").then(...)
+
 ```
