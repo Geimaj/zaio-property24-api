@@ -25,6 +25,10 @@ module.exports.User = class User {
 		});
 	}
 
+	static whoami() {
+		return get("/whoami");
+	}
+
 	static getAll() {
 		return get(`/user`);
 	}

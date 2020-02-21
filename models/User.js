@@ -31,7 +31,7 @@ const User = mongoose.model("User", userSchema);
 module.exports.User = mongoose.models.User || User;
 module.exports.getSafeUserData = function(user) {
 	const safeCopy = {
-		id: user.id,
+		id: user.id || user._id,
 		username: user.username,
 		fullname: user.fullname,
 		email: user.email
