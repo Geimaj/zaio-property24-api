@@ -25,6 +25,10 @@ module.exports.User = class User {
 		});
 	}
 
+	static logout() {
+		return get("/logout");
+	}
+
 	static whoami() {
 		return get("/whoami");
 	}

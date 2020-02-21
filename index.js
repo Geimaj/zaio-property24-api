@@ -62,6 +62,15 @@ app.use(passport.session());
 //unuathenticated routes
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
+app.get("/logout", (req, res) => {
+	req.logout();
+	res.status(200);
+	res.send({
+		result: "sucsess",
+		id: 0,
+		fullname: "noone"
+	});
+});
 
 app.route("/whoami").get((req, res) => {
 	if (req.user) {
