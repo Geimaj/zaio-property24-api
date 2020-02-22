@@ -1,21 +1,21 @@
 name: Publish to NPM
 
 on:
-  push:
-    branches: 
-      - master
+    push:
+        branches:
+            - master
 
 jobs:
-  publish-npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: npm i
-      - run: NODE_ENV=production npm publish --access-public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
+    publish-npm:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12
+                  registry-url: https://registry.npmjs.org/
+            - run: npm i
+            - run: npm version patch
+            - run: NODE_ENV=production npm publish --access-public
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.npm_token}}
