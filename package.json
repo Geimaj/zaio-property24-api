@@ -1,6 +1,6 @@
 {
 	"name": "@geimaj/zaio-property24-api",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"scripts": {
 		"dev": " env $(cat .env) nodemon index.js ",
 		"test": "mocha -w",
