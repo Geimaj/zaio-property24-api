@@ -1,40 +1,40 @@
 {
-  "name": "@geimaj/zaio-property24-api",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": " env $(cat .env) nodemon index.js ",
-    "test": "mocha -w",
-    "start": "node index.js"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.2"
-  },
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "chai": "^4.2.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-session": "^1.17.0",
-    "mocha": "^7.0.1",
-    "mongodb": "^3.5.2",
-    "mongoose": "^5.8.11",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "supertest": "^4.0.2"
-  },
-  "description": "Property24 API",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Geimaj/zaio-property24-api.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Geimaj/zaio-property24-api/issues"
-  },
-  "homepage": "https://github.com/Geimaj/zaio-property24-api#readme"
+	"name": "@geimaj/zaio-property24-api",
+	"version": "0.0.0",
+	"scripts": {
+		"dev": " env $(cat .env) nodemon index.js ",
+		"test": "mocha -w",
+		"start": "node index.js"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.2"
+	},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"chai": "^4.2.0",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"express-session": "^1.17.0",
+		"mocha": "^7.0.1",
+		"mongodb": "^3.5.2",
+		"mongoose": "^5.8.11",
+		"passport": "^0.4.1",
+		"passport-local": "^1.0.0",
+		"supertest": "^4.0.2"
+	},
+	"description": "Property24 API",
+	"main": "index.js",
+	"directories": {
+		"test": "test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Geimaj/zaio-property24-api.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Geimaj/zaio-property24-api/issues"
+	},
+	"homepage": "https://github.com/Geimaj/zaio-property24-api#readme"
 }
