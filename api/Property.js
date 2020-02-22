@@ -41,6 +41,10 @@ module.exports.Property = class Property {
 		return remove(`/property/${id}`);
 	}
 
+	static getById(id) {
+		return get(`/property/${id}`);
+	}
+
 	save() {
 		return post("/property", {
 			...this
