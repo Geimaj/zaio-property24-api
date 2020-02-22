@@ -15,8 +15,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - run: npm i
-      - run: npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: NODE_ENV=production npm publish --access-public
         env:
-          NPM_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
