@@ -1,9 +1,12 @@
 # Property24 API
+
 ![Publish to NPM](https://github.com/Geimaj/zaio-property24-api/workflows/Publish%20to%20NPM/badge.svg)
+
 To install:
 
-- Clone this repository
-- npm install "/path/to/this/repo" inside your client project
+```
+npm install @geimaj/zaio-property24-api
+```
 
 To use:
 
