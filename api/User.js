@@ -40,4 +40,8 @@ module.exports.User = class User {
 	static getById(userId) {
 		return get(`/user/${userId}`);
 	}
+
+	static getAgents() {
+		return get(`/user/agents`);
+	}
 };
